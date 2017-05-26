@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 node {
     // ------------------------------------------
     // Notify devops this build has started.
