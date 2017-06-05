@@ -62,6 +62,18 @@ node {
         // Notify devops of build success.
         // ------------------------------------------
         // slackSend color: '#f44336', channel: '#devops', message: "Failed ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>) - <${env.BUILD_URL}console|click here to see the console output>"
+
+        // =============================================================================================
+        // Ensure this build 'fails', and pipeline execution halts (to prevent accidental deployments).
+        // =============================================================================================
+        error('Build failed.')
+
+        // =====================================================================
+        // Clean out the workspace directory, ready for next build.
+        // =====================================================================
+        stage('cleanup') {
+            deleteDir()
+        }
     }
 
     // =====================================================================
