@@ -4,6 +4,8 @@ node {
     // ------------------------------------------
     // slackSend color: '#4CAF50', channel: '#devops', message: "Started ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>)"
 
+    // asdfghjk
+
     try {
 
         // =====================================================================
