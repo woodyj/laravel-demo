@@ -27,8 +27,6 @@ node {
         // =====================================================================
         stage("phpunit") {
             sh 'vendor/bin/phpunit'
-            
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
         }
 
         // =====================================================================
@@ -72,4 +70,6 @@ node {
         // =============================================================================================
         error('Build failed.')
     }
+
+    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 }
