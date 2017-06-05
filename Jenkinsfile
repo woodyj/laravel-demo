@@ -68,7 +68,7 @@ node {
         // =============================================================================================
         // Ensure this build 'fails', and pipeline execution halts (to prevent accidental deployments).
         // =============================================================================================
-        error('Build failed.')
+        // error('Build failed.')
     }
 
     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
