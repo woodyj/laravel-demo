@@ -69,19 +69,5 @@ node {
         // Ensure this build 'fails', and pipeline execution halts (to prevent accidental deployments).
         // =============================================================================================
         error('Build failed.')
-
-        // =====================================================================
-        // Clean out the workspace directory, ready for next build.
-        // =====================================================================
-        stage('cleanup') {
-            deleteDir()
-        }
     }
-
-    // =====================================================================
-    // Clean out the workspace directory, ready for next build.
-    // =====================================================================
-    stage('cleanup') {
-	    deleteDir()
-	}
 }
