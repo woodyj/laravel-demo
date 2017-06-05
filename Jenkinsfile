@@ -6,8 +6,6 @@ node {
 
     // asdfghjksfsdsdsdsdsdssdssdsdsd
 
-    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
-
     try {
 
         // =====================================================================
@@ -29,6 +27,8 @@ node {
         // =====================================================================
         stage("phpunit") {
             sh 'vendor/bin/phpunit'
+            
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
         }
 
         // =====================================================================
