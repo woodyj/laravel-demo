@@ -11,7 +11,6 @@ node {
         // Build project and its dependencies.
         // =====================================================================
         stage("Build") {
-            sh 'mkdir -p reports/html'
             checkout scm
             sh 'composer install'
         }
@@ -54,6 +53,7 @@ node {
         // Notify devops of build failure.
         // slackSend color: '#4CAF50', channel: '#devops', message: "Completed ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>) successfully"
     } catch (all) {
+        sh 'mkdir -p reports/html'
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 
         // ------------------------------------------
