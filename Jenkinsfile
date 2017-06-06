@@ -7,7 +7,6 @@ node {
     // asdfghjksfsdsdsdsdsdssdssdsdsd
 
     try {
-
         // =====================================================================
         // Prepare workspace for this build.
         // =====================================================================
@@ -60,6 +59,8 @@ node {
         // Notify devops of build failure.
         // slackSend color: '#4CAF50', channel: '#devops', message: "Completed ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>) successfully"
     } catch (all) {
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+
         // ------------------------------------------
         // Notify devops of build success.
         // ------------------------------------------
@@ -70,6 +71,4 @@ node {
         // =============================================================================================
         // error('Build failed.')
     }
-
-    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 }
