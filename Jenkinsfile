@@ -11,7 +11,7 @@ node {
         // Build project and its dependencies.
         // =====================================================================
         stage("Build") {
-            
+            sh 'mkdir -p reports/html'
             checkout scm
             sh 'composer install'
         }
