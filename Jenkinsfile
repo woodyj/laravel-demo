@@ -8,23 +8,18 @@ node {
 
     try {
         // =====================================================================
-        // Prepare workspace for this build.
+        // Build project and its dependencies.
         // =====================================================================
-    	stage("prepare") {
-    		checkout scm
-    	}
-
-        // =====================================================================
-        // Build project dependencies.
-        // =====================================================================
-        stage("composer_install") {
+        stage("Build") {
+            
+            checkout scm
             sh 'composer install'
         }
 
         // =====================================================================
         // Run PHP unit tests.
         // =====================================================================
-        stage("phpunit") {
+        stage("Unit Tests") {
             sh 'vendor/bin/phpunit'
         }
 
@@ -32,7 +27,7 @@ node {
         // IF THIS BRANCH IS MASTER OR DEVELOP, run integration tests
         // =====================================================================
         if (["master", "develop"].contains(env.BRANCH_NAME)) {
-            stage("integration_tests") {
+            stage("Integration Tests") {
                 // sh 'vendor/bin/behat'
             }
         }
@@ -42,12 +37,12 @@ node {
         // =====================================================================
         switch (env.BRANCH_NAME) {
             case "master":
-                stage("codedeploy") {
+                stage("Deploy: Live") {
                     // sh "aws deploy push --application-name My_App_Production --s3-location s3://my-app-production/build-${env.BUILD_NUMBER}.zip"
                 }
                 break
             case "develop":
-                stage("codedeploy") {
+                stage("Deploy: Stage") {
                     // sh "aws deploy push --application-name My_App_Staging --s3-location s3://my-app-staging/build-${env.BUILD_NUMBER}.zip"
                 }
                 break
