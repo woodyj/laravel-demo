@@ -4,8 +4,6 @@ node {
     // ------------------------------------------
     // slackSend color: '#4CAF50', channel: '#devops', message: "Started ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>)"
 
-    // asdfghjksfsdsdsdsdsdssdssdsdsdd
-
     try {
         // =====================================================================
         // Build project and its dependencies.
@@ -20,6 +18,25 @@ node {
         // =====================================================================
         stage("Unit Tests") {
             sh 'vendor/bin/phpunit'
+        }
+
+        stage("Integration Tests") {
+            println 'Integration Tests...'
+        }
+
+        stage("E2E Tests") {
+            println 'E2E Tests...'
+        }
+
+        stage("Generate Test Reports") {
+            step([
+                $class: 'CloverPublisher',
+                cloverReportDir: 'target/site',
+                cloverReportFileName: 'clover.xml',
+                healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80], // optional, default is: method=70, conditional=80, statement=80
+                unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50], // optional, default is none
+                failingTarget: [methodCoverage: 0, conditionalCoverage: 0, statementCoverage: 0]     // optional, default is none
+            ])
         }
 
         // =====================================================================
@@ -53,8 +70,8 @@ node {
         // Notify devops of build failure.
         // slackSend color: '#4CAF50', channel: '#devops', message: "Completed ${env.JOB_NAME} (<${env.BUILD_URL}|build ${env.BUILD_NUMBER}>) successfully"
     } catch (all) {
-        sh 'mkdir -p reports/html'
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+        // sh 'mkdir -p reports/html'
+        // publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports/html/', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 
         // ------------------------------------------
         // Notify devops of build success.
